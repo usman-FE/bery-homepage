@@ -1008,20 +1008,38 @@
         <!-- HERO SECTION END-->
         <!-- ADVANCE TABULAR COMPONENT START -->
         <div
+          x-data="{
+            activeTab: 1,
+            filterOpen: false,
+            filter: document.querySelectorAll('.filter'),
+            filterShowOverflow: function(){
+              if(this.filterOpen === false) return;
+              setTimeout(() => {
+                this.filter.forEach(item => {
+                  item.style.overflow = 'visible';
+                })
+              }, 500);
+            }
+          }"
           class="container mx-auto px-5 mt-[80px] md:mt-[120px] lg:mt-[0px] z-[2] pl-[60px] lg:pl-[50px] lg:absolute lg:left-0 lg:right-0 lg:top-[100%] lg:translate-y-[-470px]"
         >
           <div>
             <!-- TAB NAVIGAION START -->
             <div class="relative text-center">
               <ul
-                class="tab-nav search-tab inline-flex px-[15px] sm:px-[30px] py-[22px] border-t border-l border-r border-solid border-[#016450] rounded-tl-[15px] rounded-tr-[15px] bg-[rgb(232,241,255,0.9)]"
+                class="inline-flex px-[15px] sm:px-[30px] py-[22px] border-t border-l border-r border-solid border-[#016450] rounded-tl-[15px] rounded-tr-[15px] bg-[rgb(232,241,255,0.9)]"
               >
                 <li
                   data-tab="buy"
                   class="mr-[5px] sm:mr-[10px] md:mr-[46px] my-1 active"
                 >
                   <button
+                    @click="
+                      activeTab = 1;
+                      filterOpen = false;
+                    "
                     class="font-['Lora'] leading-none px-[5px] sm:px-[10px] capitalize text-[#0b2c3d] transition-all text-base xl:text-[22px] before:absolute before:left-auto before:right-0 before:bottom-[-30px] before:z-10 before:rounded-full before:w-0 before:h-[3px] before:content-[''] before:bg-[#b39359] relative before:transition-all ease-out hover:before:left-0 hover:before:right-auto hover:before:w-full hover:before:transition-all before:duration-500"
+                    :class="{'before:left-0 before:right-auto before:w-full before:bg-[#0b2c3d]': activeTab === 1}"
                   >
                     buy
                   </button>
@@ -1031,7 +1049,12 @@
                   class="mr-[5px] sm:mr-[10px] md:mr-[46px] my-1"
                 >
                   <button
+                    @click="
+                    activeTab = 2;
+                    filterOpen = false;
+                    "
                     class="font-['Lora'] leading-none px-[5px] sm:px-[10px] capitalize text-[#0b2c3d] transition-all text-base xl:text-[22px] before:absolute before:left-auto before:right-0 before:bottom-[-30px] before:z-10 before:rounded-full before:w-0 before:h-[3px] before:content-[''] before:bg-[#b39359] relative before:transition-all ease-out hover:before:left-0 hover:before:right-auto hover:before:w-full hover:before:transition-all before:duration-500"
+                    :class="{'before:left-0 before:right-auto before:w-full before:bg-[#0b2c3d]': activeTab === 2}"
                   >
                     sell
                   </button>
@@ -1041,14 +1064,24 @@
                   class="mr-[5px] sm:mr-[10px] md:mr-[46px] my-1"
                 >
                   <button
+                    @click="
+                      activeTab = 3;
+                      filterOpen = false;
+                    "
                     class="font-['Lora'] leading-none px-[5px] sm:px-[10px] capitalize text-[#0b2c3d] transition-all text-base xl:text-[22px] before:absolute before:left-auto before:right-0 before:bottom-[-30px] before:z-10 before:rounded-full before:w-0 before:h-[3px] before:content-[''] before:bg-[#b39359] relative before:transition-all ease-out hover:before:left-0 hover:before:right-auto hover:before:w-full hover:before:transition-all before:duration-500"
+                    :class="{'before:left-0 before:right-auto before:w-full before:bg-[#0b2c3d]': activeTab === 3}"
                   >
                     rent
                   </button>
                 </li>
                 <li data-tab="co-living" class="md:mr-[0px] my-1">
                   <button
+                    @click="
+                        activeTab = 4;
+                        filterOpen = false;
+                      "
                     class="font-['Lora'] leading-none px-[5px] sm:px-[10px] capitalize text-[#0b2c3d] transition-all text-base xl:text-[22px] before:absolute before:left-auto before:right-0 before:bottom-[-30px] before:z-10 before:rounded-full before:w-0 before:h-[3px] before:content-[''] before:bg-[#b39359] relative before:transition-all ease-out hover:before:left-0 hover:before:right-auto hover:before:w-full hover:before:transition-all before:duration-500"
+                    :class="{'before:left-0 before:right-auto before:w-full before:bg-[#0b2c3d]': activeTab === 4}"
                   >
                     Co-living
                   </button>
@@ -1061,6 +1094,11 @@
               <!-- FILTER BUTTON -->
               <button
                 class="px-[10px] py-[15px] absolute top-[0px] left-[-45px] border-l border-t border-b border-solid border-[#fff] bg-[rgb(232,241,255,0.98)] text-[#0b2c3d] rounded-tl-[10px] rounded-bl-[10px]"
+                :class="{'!bg-[#b39359] text-white' : filterOpen}"
+                @click="
+                  filterOpen = !filterOpen;
+                  filterShowOverflow()
+                "
               >
                 <svg
                   width="24"
@@ -1145,13 +1183,15 @@
               </button>
               <!-- BUY CONTENT -->
               <div
+                x-show="activeTab === 1"
                 class="bg-[rgb(232,241,255,0.9)] border-t border-solid border-[#fff] rounded-bl-[15px] rounded-br-[15px] rounded-tr-[15px] px-[15px] sm:px-[30px] py-[40px]"
               >
                 <form>
-                  <div class="flex flex-wrap w-full -mb-[45px]">
+                  <!-- PRIMARY CONTENT -->
+                  <div class="flex flex-wrap w-full justify-center -mb-[45px]">
                     <!-- LOCATION -->
                     <div
-                      class="w-full md:w-1/2 lg:w-auto flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] xl:mr-[50px] last:mr-0 last:border-r-0 mb-[45px]"
+                      class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] xl:mr-[50px] last:mr-0 last:border-r-0 mb-[45px]"
                     >
                       <!-- LOCATION ICON -->
                       <div class="mr-4 self-start shrink-0">
@@ -1179,7 +1219,7 @@
                     </div>
                     <!-- PROPERTY TYPE -->
                     <div
-                      class="w-full md:w-1/2 lg:w-auto flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[15px] last:mr-0 last:border-r-0 mb-[45px]"
+                      class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
                     >
                       <!-- ICON -->
                       <div class="mr-4 self-start shrink-0">
@@ -1227,7 +1267,6 @@
                           <div
                             x-show="dropDownOpen"
                             class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
-                            style="display: none"
                           >
                             <div class="h-full overflow-auto">
                               <ul>
@@ -1263,7 +1302,7 @@
                     </div>
                     <!-- PRICE RANGE -->
                     <div
-                      class="w-full md:w-1/2 lg:w-auto flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[15px] last:mr-0 last:border-r-0 mb-[45px]"
+                      class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
                     >
                       <!-- ICON -->
                       <div class="mr-4 self-start shrink-0">
@@ -1311,7 +1350,6 @@
                           <div
                             x-show="dropDownOpen"
                             class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
-                            style="display: none"
                           >
                             <div class="h-full overflow-auto">
                               <ul>
@@ -1347,7 +1385,7 @@
                     </div>
                     <!-- PROPERTY SIZE -->
                     <div
-                      class="w-full md:w-1/2 lg:w-auto flex-1 flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[15px] last:mr-0 last:border-r-0 mb-[45px] relative"
+                      class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] last:mr-0 last:border-r-0 mb-[45px] relative"
                     >
                       <!-- ICON -->
                       <div class="mr-4 self-start shrink-0">
@@ -1360,7 +1398,7 @@
                       </div>
                       <!-- PRICE RANGE DROPDOWN -->
                       <div
-                        class="flex-1"
+                        class="flex-1 pr-[20px]"
                         x-data="
                               {
                                 dropDownOpen: false,
@@ -1395,7 +1433,6 @@
                           <div
                             x-show="dropDownOpen"
                             class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
-                            style="display: none"
                           >
                             <div class="h-full overflow-auto">
                               <ul>
@@ -1429,7 +1466,10 @@
                         </div>
                       </div>
                       <!-- SEARCH BUTTON -->
-                      <button class="p-[10px] rounded-md bg-[#b39359]">
+                      <button
+                        class="p-[10px] rounded-md bg-[#b39359] transition-all hover:bg-[#0b2c3d]"
+                        x-show="!filterOpen"
+                      >
                         <img
                           src="images/search-outline.svg"
                           class="max-w-[30px]"
@@ -1439,6 +1479,2020 @@
                         />
                         <span class="hidden">Search Properties</span>
                       </button>
+                    </div>
+                  </div>
+                  <!-- ADVANCE SEARCH CONTENT -->
+                  <div
+                    class="filter transition-all duration-500 max-h-0 overflow-hidden"
+                    :style="filterOpen ? 'max-height: ' + $el.scrollHeight + 'px': ''"
+                  >
+                    <div
+                      class="flex flex-wrap justify-center items-center mt-[45px] -mb-[45px]"
+                    >
+                      <!-- BEDROOM -->
+                      <div
+                        class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                      >
+                        <!-- ICON -->
+                        <div class="mr-4 self-start shrink-0">
+                          <img
+                            src="images/location.svg"
+                            width="24"
+                            height="24"
+                            alt="svg icon"
+                          />
+                        </div>
+                        <!-- BEDROOM DROPDOWN -->
+                        <div
+                          class="flex-1"
+                          x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['Bedrooms', 'Kitchen', 'Dinning Rooms', 'Duplex House 3'],
+                                selected: 1,
+                              }
+                              "
+                          @click.away="dropDownOpen = false"
+                        >
+                          <label
+                            for="property"
+                            class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            Bedrooms
+                          </label>
+                          <div class="relative">
+                            <div
+                              class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                              :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                              @click="dropDownOpen = !dropDownOpen"
+                            >
+                              <span
+                                x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] :  selected === 4 ? items[3] : ''"
+                              ></span>
+                              <span>▾</span>
+                            </div>
+                            <div
+                              x-show="dropDownOpen"
+                              class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                            >
+                              <div class="h-full overflow-auto">
+                                <ul>
+                                  <li
+                                    class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[0]"
+                                    @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[1]"
+                                    @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[2]"
+                                    @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[3]"
+                                    @click="
+                                    selected = 4;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- BATHROOM -->
+                      <div
+                        class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                      >
+                        <!-- ICON -->
+                        <div class="mr-4 self-start shrink-0">
+                          <img
+                            src="images/property.svg"
+                            width="24"
+                            height="24"
+                            alt="svg icon"
+                          />
+                        </div>
+                        <!-- BATHROOM DROPDOWN -->
+                        <div
+                          class="flex-1"
+                          x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['Duplex House', 'Duplex House 1', 'Duplex House 2'],
+                                selected: 1,
+                              }
+                              "
+                          @click.away="dropDownOpen = false"
+                        >
+                          <label
+                            for="property"
+                            class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            Bathrooms
+                          </label>
+                          <div class="relative">
+                            <div
+                              class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                              :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                              @click="dropDownOpen = !dropDownOpen"
+                            >
+                              <span
+                                x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                              ></span>
+                              <span>▾</span>
+                            </div>
+                            <div
+                              x-show="dropDownOpen"
+                              class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                            >
+                              <div class="h-full overflow-auto">
+                                <ul>
+                                  <li
+                                    class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[0]"
+                                    @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[1]"
+                                    @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[2]"
+                                    @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- GARAGE -->
+                      <div
+                        class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                      >
+                        <!-- ICON -->
+                        <div class="mr-4 self-start shrink-0">
+                          <img
+                            src="images/dollar-circle.svg"
+                            width="24"
+                            height="24"
+                            alt="svg icon"
+                          />
+                        </div>
+                        <!-- GARAGE DROPDOWN -->
+                        <div
+                          class="flex-1"
+                          x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['2 Garage', '3 Garage', '4 Garage'],
+                                selected: 1,
+                              }
+                              "
+                          @click.away="dropDownOpen = false"
+                        >
+                          <label
+                            for="property"
+                            class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            Price Range
+                          </label>
+                          <div class="relative">
+                            <div
+                              class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                              :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                              @click="dropDownOpen = !dropDownOpen"
+                            >
+                              <span
+                                x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                              ></span>
+                              <span>▾</span>
+                            </div>
+                            <div
+                              x-show="dropDownOpen"
+                              class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                            >
+                              <div class="h-full overflow-auto">
+                                <ul>
+                                  <li
+                                    class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[0]"
+                                    @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[1]"
+                                    @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[2]"
+                                    @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- SEARCH PROPERTIES SECONDARY BUTTON -->
+                      <div
+                        class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] last:mr-0 last:border-r-0 mb-[45px] relative"
+                      >
+                        <button
+                          class="w-full p-[20px] text-[18px] md:text-[22px] bg-[#FFF6F0] text-[#B39359] rounded-lg transition-all hover:bg-[#0b2c3d] hover:text-white"
+                        >
+                          Search Properties
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- SELL CONTENT -->
+              <div
+                x-show="activeTab === 2"
+                class="bg-[rgb(232,241,255,0.9)] border-t border-solid border-[#fff] rounded-bl-[15px] rounded-br-[15px] rounded-tr-[15px] px-[15px] sm:px-[30px] py-[40px]"
+              >
+                <form>
+                  <!-- PRIMARY CONTENT -->
+                  <div class="flex flex-wrap w-full justify-center -mb-[45px]">
+                    <!-- LOCATION -->
+                    <div
+                      class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] xl:mr-[50px] last:mr-0 last:border-r-0 mb-[45px]"
+                    >
+                      <!-- LOCATION ICON -->
+                      <div class="mr-4 self-start shrink-0">
+                        <img
+                          src="images/location.svg"
+                          width="24"
+                          height="24"
+                          alt="svg icon"
+                        />
+                      </div>
+                      <!-- LOCATION INPUT FIELD -->
+                      <div class="flex-1">
+                        <label
+                          for="location-sell"
+                          class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                          >Location</label
+                        >
+                        <input
+                          id="location-sell"
+                          type="text"
+                          placeholder="Choose location"
+                          class="text-tiny placeholder:text-body leading-none font-light pr-3 focus:outline-none w-full bg-transparent"
+                        />
+                      </div>
+                    </div>
+                    <!-- PROPERTY TYPE -->
+                    <div
+                      class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                    >
+                      <!-- ICON -->
+                      <div class="mr-4 self-start shrink-0">
+                        <img
+                          src="images/property.svg"
+                          width="24"
+                          height="24"
+                          alt="svg icon"
+                        />
+                      </div>
+                      <!-- PROPERTY TYPE DROPDOWN -->
+                      <div
+                        class="flex-1"
+                        x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['Duplex House 1', 'Duplex House 2' ,'Apartments'],
+                                selected: 1,
+                              }
+                              "
+                        @click.away="dropDownOpen = false"
+                      >
+                        <label
+                          for="property"
+                          class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                          @click="dropDownOpen = !dropDownOpen"
+                        >
+                          Property Type
+                        </label>
+                        <div class="relative">
+                          <div
+                            class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                            :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            <span
+                              x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                            ></span>
+                            <span>▾</span>
+                          </div>
+                          <div
+                            x-show="dropDownOpen"
+                            class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                          >
+                            <div class="h-full overflow-auto">
+                              <ul>
+                                <li
+                                  class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[0]"
+                                  @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[1]"
+                                  @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[2]"
+                                  @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- PRICE RANGE -->
+                    <div
+                      class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                    >
+                      <!-- ICON -->
+                      <div class="mr-4 self-start shrink-0">
+                        <img
+                          src="images/dollar-circle.svg"
+                          width="24"
+                          height="24"
+                          alt="svg icon"
+                        />
+                      </div>
+                      <!-- PRICE RANGE DROPDOWN -->
+                      <div
+                        class="flex-1"
+                        x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['1500 USD', '3600 USD', '3700 USD'],
+                                selected: 1,
+                              }
+                              "
+                        @click.away="dropDownOpen = false"
+                      >
+                        <label
+                          for="property"
+                          class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                          @click="dropDownOpen = !dropDownOpen"
+                        >
+                          Price Range
+                        </label>
+                        <div class="relative">
+                          <div
+                            class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                            :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            <span
+                              x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                            ></span>
+                            <span>▾</span>
+                          </div>
+                          <div
+                            x-show="dropDownOpen"
+                            class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                          >
+                            <div class="h-full overflow-auto">
+                              <ul>
+                                <li
+                                  class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[0]"
+                                  @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[1]"
+                                  @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[2]"
+                                  @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- PROPERTY SIZE -->
+                    <div
+                      class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] last:mr-0 last:border-r-0 mb-[45px] relative"
+                    >
+                      <!-- ICON -->
+                      <div class="mr-4 self-start shrink-0">
+                        <img
+                          src="images/area.svg"
+                          width="24"
+                          height="24"
+                          alt="svg icon"
+                        />
+                      </div>
+                      <!-- PRICE RANGE DROPDOWN -->
+                      <div
+                        class="flex-1 pr-[20px]"
+                        x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['2500 sqft', '1600 sqft', '1700 sqft'],
+                                selected: 1,
+                              }
+                              "
+                        @click.away="dropDownOpen = false"
+                      >
+                        <label
+                          for="property"
+                          class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                          @click="dropDownOpen = !dropDownOpen"
+                        >
+                          Property Size
+                        </label>
+                        <div class="relative">
+                          <div
+                            class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                            :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            <span
+                              x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                            ></span>
+                            <span>▾</span>
+                          </div>
+                          <div
+                            x-show="dropDownOpen"
+                            class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                          >
+                            <div class="h-full overflow-auto">
+                              <ul>
+                                <li
+                                  class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[0]"
+                                  @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[1]"
+                                  @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[2]"
+                                  @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- SEARCH BUTTON -->
+                      <button
+                        class="p-[10px] rounded-md bg-[#b39359] transition-all hover:bg-[#0b2c3d]"
+                        x-show="!filterOpen"
+                      >
+                        <img
+                          src="images/search-outline.svg"
+                          class="max-w-[30px]"
+                          width="40"
+                          height="40"
+                          alt="svg icon"
+                        />
+                        <span class="hidden">Search Properties</span>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- ADVANCE SEARCH CONTENT -->
+                  <div
+                    class="filter transition-all duration-500 max-h-0 overflow-hidden"
+                    :style="filterOpen ? 'max-height: ' + $el.scrollHeight + 'px' : ''"
+                  >
+                    <div
+                      class="flex flex-wrap justify-center items-center mt-[45px] -mb-[45px]"
+                    >
+                      <!-- BEDROOM -->
+                      <div
+                        class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                      >
+                        <!-- ICON -->
+                        <div class="mr-4 self-start shrink-0">
+                          <img
+                            src="images/location.svg"
+                            width="24"
+                            height="24"
+                            alt="svg icon"
+                          />
+                        </div>
+                        <!-- BEDROOM DROPDOWN -->
+                        <div
+                          class="flex-1"
+                          x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['Bedrooms', 'Kitchen', 'Dinning Rooms', 'Duplex House 3'],
+                                selected: 1,
+                              }
+                              "
+                          @click.away="dropDownOpen = false"
+                        >
+                          <label
+                            for="property"
+                            class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            Bedrooms
+                          </label>
+                          <div class="relative">
+                            <div
+                              class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                              :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                              @click="dropDownOpen = !dropDownOpen"
+                            >
+                              <span
+                                x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] :  selected === 4 ? items[3] : ''"
+                              ></span>
+                              <span>▾</span>
+                            </div>
+                            <div
+                              x-show="dropDownOpen"
+                              class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                            >
+                              <div class="h-full overflow-auto">
+                                <ul>
+                                  <li
+                                    class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[0]"
+                                    @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[1]"
+                                    @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[2]"
+                                    @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[3]"
+                                    @click="
+                                    selected = 4;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- BATHROOM -->
+                      <div
+                        class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                      >
+                        <!-- ICON -->
+                        <div class="mr-4 self-start shrink-0">
+                          <img
+                            src="images/property.svg"
+                            width="24"
+                            height="24"
+                            alt="svg icon"
+                          />
+                        </div>
+                        <!-- BATHROOM DROPDOWN -->
+                        <div
+                          class="flex-1"
+                          x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['Duplex House', 'Duplex House 1', 'Duplex House 2'],
+                                selected: 1,
+                              }
+                              "
+                          @click.away="dropDownOpen = false"
+                        >
+                          <label
+                            for="property"
+                            class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            Bathrooms
+                          </label>
+                          <div class="relative">
+                            <div
+                              class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                              :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                              @click="dropDownOpen = !dropDownOpen"
+                            >
+                              <span
+                                x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                              ></span>
+                              <span>▾</span>
+                            </div>
+                            <div
+                              x-show="dropDownOpen"
+                              class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                            >
+                              <div class="h-full overflow-auto">
+                                <ul>
+                                  <li
+                                    class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[0]"
+                                    @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[1]"
+                                    @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[2]"
+                                    @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- GARAGE -->
+                      <div
+                        class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                      >
+                        <!-- ICON -->
+                        <div class="mr-4 self-start shrink-0">
+                          <img
+                            src="images/dollar-circle.svg"
+                            width="24"
+                            height="24"
+                            alt="svg icon"
+                          />
+                        </div>
+                        <!-- GARAGE DROPDOWN -->
+                        <div
+                          class="flex-1"
+                          x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['2 Garage', '3 Garage', '4 Garage'],
+                                selected: 1,
+                              }
+                              "
+                          @click.away="dropDownOpen = false"
+                        >
+                          <label
+                            for="property"
+                            class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            Price Range
+                          </label>
+                          <div class="relative">
+                            <div
+                              class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                              :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                              @click="dropDownOpen = !dropDownOpen"
+                            >
+                              <span
+                                x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                              ></span>
+                              <span>▾</span>
+                            </div>
+                            <div
+                              x-show="dropDownOpen"
+                              class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                            >
+                              <div class="h-full overflow-auto">
+                                <ul>
+                                  <li
+                                    class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[0]"
+                                    @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[1]"
+                                    @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[2]"
+                                    @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- SEARCH PROPERTIES SECONDARY BUTTON -->
+                      <div
+                        class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] last:mr-0 last:border-r-0 mb-[45px] relative"
+                      >
+                        <button
+                          class="w-full p-[20px] text-[18px] md:text-[22px] bg-[#FFF6F0] text-[#B39359] rounded-lg transition-all hover:bg-[#0b2c3d] hover:text-white"
+                        >
+                          Search Properties
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- RENT CONTENT -->
+              <div
+                x-show="activeTab === 3"
+                class="bg-[rgb(232,241,255,0.9)] border-t border-solid border-[#fff] rounded-bl-[15px] rounded-br-[15px] rounded-tr-[15px] px-[15px] sm:px-[30px] py-[40px]"
+              >
+                <form>
+                  <!-- PRIMARY CONTENT -->
+                  <div class="flex flex-wrap w-full justify-center -mb-[45px]">
+                    <!-- LOCATION -->
+                    <div
+                      class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] xl:mr-[50px] last:mr-0 last:border-r-0 mb-[45px]"
+                    >
+                      <!-- LOCATION ICON -->
+                      <div class="mr-4 self-start shrink-0">
+                        <img
+                          src="images/location.svg"
+                          width="24"
+                          height="24"
+                          alt="svg icon"
+                        />
+                      </div>
+                      <!-- LOCATION INPUT FIELD -->
+                      <div class="flex-1">
+                        <label
+                          for="location-rent"
+                          class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                          >Location</label
+                        >
+                        <input
+                          id="location-rent"
+                          type="text"
+                          placeholder="Choose location"
+                          class="text-tiny placeholder:text-body leading-none font-light pr-3 focus:outline-none w-full bg-transparent"
+                        />
+                      </div>
+                    </div>
+                    <!-- PROPERTY TYPE -->
+                    <div
+                      class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                    >
+                      <!-- ICON -->
+                      <div class="mr-4 self-start shrink-0">
+                        <img
+                          src="images/property.svg"
+                          width="24"
+                          height="24"
+                          alt="svg icon"
+                        />
+                      </div>
+                      <!-- PROPERTY TYPE DROPDOWN -->
+                      <div
+                        class="flex-1"
+                        x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['Apartments', 'Duplex House 1', 'Duplex House 2'],
+                                selected: 1,
+                              }
+                              "
+                        @click.away="dropDownOpen = false"
+                      >
+                        <label
+                          for="property"
+                          class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                          @click="dropDownOpen = !dropDownOpen"
+                        >
+                          Property Type
+                        </label>
+                        <div class="relative">
+                          <div
+                            class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                            :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            <span
+                              x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                            ></span>
+                            <span>▾</span>
+                          </div>
+                          <div
+                            x-show="dropDownOpen"
+                            class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                          >
+                            <div class="h-full overflow-auto">
+                              <ul>
+                                <li
+                                  class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[0]"
+                                  @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[1]"
+                                  @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[2]"
+                                  @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- PRICE RANGE -->
+                    <div
+                      class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                    >
+                      <!-- ICON -->
+                      <div class="mr-4 self-start shrink-0">
+                        <img
+                          src="images/dollar-circle.svg"
+                          width="24"
+                          height="24"
+                          alt="svg icon"
+                        />
+                      </div>
+                      <!-- PRICE RANGE DROPDOWN -->
+                      <div
+                        class="flex-1"
+                        x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['3500 USD', '3600 USD', '3700 USD'],
+                                selected: 1,
+                              }
+                              "
+                        @click.away="dropDownOpen = false"
+                      >
+                        <label
+                          for="property"
+                          class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                          @click="dropDownOpen = !dropDownOpen"
+                        >
+                          Price Range
+                        </label>
+                        <div class="relative">
+                          <div
+                            class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                            :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            <span
+                              x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                            ></span>
+                            <span>▾</span>
+                          </div>
+                          <div
+                            x-show="dropDownOpen"
+                            class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                          >
+                            <div class="h-full overflow-auto">
+                              <ul>
+                                <li
+                                  class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[0]"
+                                  @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[1]"
+                                  @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[2]"
+                                  @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- PROPERTY SIZE -->
+                    <div
+                      class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] last:mr-0 last:border-r-0 mb-[45px] relative"
+                    >
+                      <!-- ICON -->
+                      <div class="mr-4 self-start shrink-0">
+                        <img
+                          src="images/area.svg"
+                          width="24"
+                          height="24"
+                          alt="svg icon"
+                        />
+                      </div>
+                      <!-- PRICE RANGE DROPDOWN -->
+                      <div
+                        class="flex-1 pr-[20px]"
+                        x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['1500 sqft', '1600 sqft', '1700 sqft'],
+                                selected: 1,
+                              }
+                              "
+                        @click.away="dropDownOpen = false"
+                      >
+                        <label
+                          for="property"
+                          class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                          @click="dropDownOpen = !dropDownOpen"
+                        >
+                          Property Size
+                        </label>
+                        <div class="relative">
+                          <div
+                            class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                            :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            <span
+                              x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                            ></span>
+                            <span>▾</span>
+                          </div>
+                          <div
+                            x-show="dropDownOpen"
+                            class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                          >
+                            <div class="h-full overflow-auto">
+                              <ul>
+                                <li
+                                  class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[0]"
+                                  @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[1]"
+                                  @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[2]"
+                                  @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- SEARCH BUTTON -->
+                      <button
+                        class="p-[10px] rounded-md bg-[#b39359] transition-all hover:bg-[#0b2c3d]"
+                        x-show="!filterOpen"
+                      >
+                        <img
+                          src="images/search-outline.svg"
+                          class="max-w-[30px]"
+                          width="40"
+                          height="40"
+                          alt="svg icon"
+                        />
+                        <span class="hidden">Search Properties</span>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- ADVANCE SEARCH CONTENT -->
+                  <div
+                    class="filter transition-all duration-500 max-h-0 overflow-hidden"
+                    :style="filterOpen ? 'max-height: ' + $el.scrollHeight + 'px': ''"
+                  >
+                    <div
+                      class="flex flex-wrap justify-center items-center mt-[45px] -mb-[45px]"
+                    >
+                      <!-- BEDROOM -->
+                      <div
+                        class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                      >
+                        <!-- ICON -->
+                        <div class="mr-4 self-start shrink-0">
+                          <img
+                            src="images/location.svg"
+                            width="24"
+                            height="24"
+                            alt="svg icon"
+                          />
+                        </div>
+                        <!-- BEDROOM DROPDOWN -->
+                        <div
+                          class="flex-1"
+                          x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['Bedrooms', 'Kitchen', 'Dinning Rooms', 'Duplex House 3'],
+                                selected: 1,
+                              }
+                              "
+                          @click.away="dropDownOpen = false"
+                        >
+                          <label
+                            for="property"
+                            class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            Bedrooms
+                          </label>
+                          <div class="relative">
+                            <div
+                              class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                              :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                              @click="dropDownOpen = !dropDownOpen"
+                            >
+                              <span
+                                x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] :  selected === 4 ? items[3] : ''"
+                              ></span>
+                              <span>▾</span>
+                            </div>
+                            <div
+                              x-show="dropDownOpen"
+                              class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                            >
+                              <div class="h-full overflow-auto">
+                                <ul>
+                                  <li
+                                    class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[0]"
+                                    @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[1]"
+                                    @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[2]"
+                                    @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[3]"
+                                    @click="
+                                    selected = 4;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- BATHROOM -->
+                      <div
+                        class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                      >
+                        <!-- ICON -->
+                        <div class="mr-4 self-start shrink-0">
+                          <img
+                            src="images/property.svg"
+                            width="24"
+                            height="24"
+                            alt="svg icon"
+                          />
+                        </div>
+                        <!-- BATHROOM DROPDOWN -->
+                        <div
+                          class="flex-1"
+                          x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['Duplex House', 'Duplex House 1', 'Duplex House 2'],
+                                selected: 1,
+                              }
+                              "
+                          @click.away="dropDownOpen = false"
+                        >
+                          <label
+                            for="property"
+                            class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            Bathrooms
+                          </label>
+                          <div class="relative">
+                            <div
+                              class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                              :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                              @click="dropDownOpen = !dropDownOpen"
+                            >
+                              <span
+                                x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                              ></span>
+                              <span>▾</span>
+                            </div>
+                            <div
+                              x-show="dropDownOpen"
+                              class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                            >
+                              <div class="h-full overflow-auto">
+                                <ul>
+                                  <li
+                                    class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[0]"
+                                    @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[1]"
+                                    @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[2]"
+                                    @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- GARAGE -->
+                      <div
+                        class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                      >
+                        <!-- ICON -->
+                        <div class="mr-4 self-start shrink-0">
+                          <img
+                            src="images/dollar-circle.svg"
+                            width="24"
+                            height="24"
+                            alt="svg icon"
+                          />
+                        </div>
+                        <!-- GARAGE DROPDOWN -->
+                        <div
+                          class="flex-1"
+                          x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['2 Garage', '3 Garage', '4 Garage'],
+                                selected: 1,
+                              }
+                              "
+                          @click.away="dropDownOpen = false"
+                        >
+                          <label
+                            for="property"
+                            class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            Price Range
+                          </label>
+                          <div class="relative">
+                            <div
+                              class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                              :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                              @click="dropDownOpen = !dropDownOpen"
+                            >
+                              <span
+                                x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                              ></span>
+                              <span>▾</span>
+                            </div>
+                            <div
+                              x-show="dropDownOpen"
+                              class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                            >
+                              <div class="h-full overflow-auto">
+                                <ul>
+                                  <li
+                                    class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[0]"
+                                    @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[1]"
+                                    @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[2]"
+                                    @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- SEARCH PROPERTIES SECONDARY BUTTON -->
+                      <div
+                        class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] last:mr-0 last:border-r-0 mb-[45px] relative"
+                      >
+                        <button
+                          class="w-full p-[20px] text-[18px] md:text-[22px] bg-[#FFF6F0] text-[#B39359] rounded-lg transition-all hover:bg-[#0b2c3d] hover:text-white"
+                        >
+                          Search Properties
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- CO-LIVING CONTENT -->
+              <div
+                x-show="activeTab === 4"
+                class="bg-[rgb(232,241,255,0.9)] border-t border-solid border-[#fff] rounded-bl-[15px] rounded-br-[15px] rounded-tr-[15px] px-[15px] sm:px-[30px] py-[40px]"
+              >
+                <form>
+                  <!-- PRIMARY CONTENT -->
+                  <div class="flex flex-wrap w-full justify-center -mb-[45px]">
+                    <!-- LOCATION -->
+                    <div
+                      class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] xl:mr-[50px] last:mr-0 last:border-r-0 mb-[45px]"
+                    >
+                      <!-- LOCATION ICON -->
+                      <div class="mr-4 self-start shrink-0">
+                        <img
+                          src="images/location.svg"
+                          width="24"
+                          height="24"
+                          alt="svg icon"
+                        />
+                      </div>
+                      <!-- LOCATION INPUT FIELD -->
+                      <div class="flex-1">
+                        <label
+                          for="location-co"
+                          class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                          >Location</label
+                        >
+                        <input
+                          id="location-co"
+                          type="text"
+                          placeholder="Choose location"
+                          class="text-tiny placeholder:text-body leading-none font-light pr-3 focus:outline-none w-full bg-transparent"
+                        />
+                      </div>
+                    </div>
+                    <!-- PROPERTY TYPE -->
+                    <div
+                      class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                    >
+                      <!-- ICON -->
+                      <div class="mr-4 self-start shrink-0">
+                        <img
+                          src="images/property.svg"
+                          width="24"
+                          height="24"
+                          alt="svg icon"
+                        />
+                      </div>
+                      <!-- PROPERTY TYPE DROPDOWN -->
+                      <div
+                        class="flex-1"
+                        x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['Duplex House 1', 'Duplex House 2' ,'Apartments'],
+                                selected: 1,
+                              }
+                              "
+                        @click.away="dropDownOpen = false"
+                      >
+                        <label
+                          for="property"
+                          class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                          @click="dropDownOpen = !dropDownOpen"
+                        >
+                          Property Type
+                        </label>
+                        <div class="relative">
+                          <div
+                            class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                            :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            <span
+                              x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                            ></span>
+                            <span>▾</span>
+                          </div>
+                          <div
+                            x-show="dropDownOpen"
+                            class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                          >
+                            <div class="h-full overflow-auto">
+                              <ul>
+                                <li
+                                  class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[0]"
+                                  @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[1]"
+                                  @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[2]"
+                                  @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- PRICE RANGE -->
+                    <div
+                      class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                    >
+                      <!-- ICON -->
+                      <div class="mr-4 self-start shrink-0">
+                        <img
+                          src="images/dollar-circle.svg"
+                          width="24"
+                          height="24"
+                          alt="svg icon"
+                        />
+                      </div>
+                      <!-- PRICE RANGE DROPDOWN -->
+                      <div
+                        class="flex-1"
+                        x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['1500 USD', '3600 USD', '3700 USD'],
+                                selected: 1,
+                              }
+                              "
+                        @click.away="dropDownOpen = false"
+                      >
+                        <label
+                          for="property"
+                          class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                          @click="dropDownOpen = !dropDownOpen"
+                        >
+                          Price Range
+                        </label>
+                        <div class="relative">
+                          <div
+                            class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                            :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            <span
+                              x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                            ></span>
+                            <span>▾</span>
+                          </div>
+                          <div
+                            x-show="dropDownOpen"
+                            class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                          >
+                            <div class="h-full overflow-auto">
+                              <ul>
+                                <li
+                                  class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[0]"
+                                  @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[1]"
+                                  @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[2]"
+                                  @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- PROPERTY SIZE -->
+                    <div
+                      class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] last:mr-0 last:border-r-0 mb-[45px] relative"
+                    >
+                      <!-- ICON -->
+                      <div class="mr-4 self-start shrink-0">
+                        <img
+                          src="images/area.svg"
+                          width="24"
+                          height="24"
+                          alt="svg icon"
+                        />
+                      </div>
+                      <!-- PRICE RANGE DROPDOWN -->
+                      <div
+                        class="flex-1 pr-[20px]"
+                        x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['2500 sqft', '1600 sqft', '1700 sqft'],
+                                selected: 1,
+                              }
+                              "
+                        @click.away="dropDownOpen = false"
+                      >
+                        <label
+                          for="property"
+                          class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                          @click="dropDownOpen = !dropDownOpen"
+                        >
+                          Property Size
+                        </label>
+                        <div class="relative">
+                          <div
+                            class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                            :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            <span
+                              x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                            ></span>
+                            <span>▾</span>
+                          </div>
+                          <div
+                            x-show="dropDownOpen"
+                            class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                          >
+                            <div class="h-full overflow-auto">
+                              <ul>
+                                <li
+                                  class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[0]"
+                                  @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[1]"
+                                  @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                                <li
+                                  class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                  x-text="items[2]"
+                                  @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                ></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- SEARCH BUTTON -->
+                      <button
+                        class="p-[10px] rounded-md bg-[#b39359] transition-all hover:bg-[#0b2c3d]"
+                        x-show="!filterOpen"
+                      >
+                        <img
+                          src="images/search-outline.svg"
+                          class="max-w-[30px]"
+                          width="40"
+                          height="40"
+                          alt="svg icon"
+                        />
+                        <span class="hidden">Search Properties</span>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- ADVANCE SEARCH CONTENT -->
+                  <div
+                    class="filter transition-all duration-500 max-h-0 overflow-hidden"
+                    :style="filterOpen ? 'max-height: ' + $el.scrollHeight + 'px' : ''"
+                  >
+                    <div
+                      class="flex flex-wrap justify-center items-center mt-[45px] -mb-[45px]"
+                    >
+                      <!-- BEDROOM -->
+                      <div
+                        class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                      >
+                        <!-- ICON -->
+                        <div class="mr-4 self-start shrink-0">
+                          <img
+                            src="images/location.svg"
+                            width="24"
+                            height="24"
+                            alt="svg icon"
+                          />
+                        </div>
+                        <!-- BEDROOM DROPDOWN -->
+                        <div
+                          class="flex-1"
+                          x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['Bedrooms', 'Kitchen', 'Dinning Rooms', 'Duplex House 3'],
+                                selected: 1,
+                              }
+                              "
+                          @click.away="dropDownOpen = false"
+                        >
+                          <label
+                            for="property"
+                            class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            Bedrooms
+                          </label>
+                          <div class="relative">
+                            <div
+                              class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                              :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                              @click="dropDownOpen = !dropDownOpen"
+                            >
+                              <span
+                                x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] :  selected === 4 ? items[3] : ''"
+                              ></span>
+                              <span>▾</span>
+                            </div>
+                            <div
+                              x-show="dropDownOpen"
+                              class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                            >
+                              <div class="h-full overflow-auto">
+                                <ul>
+                                  <li
+                                    class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[0]"
+                                    @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[1]"
+                                    @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[2]"
+                                    @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[3]"
+                                    @click="
+                                    selected = 4;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- BATHROOM -->
+                      <div
+                        class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                      >
+                        <!-- ICON -->
+                        <div class="mr-4 self-start shrink-0">
+                          <img
+                            src="images/property.svg"
+                            width="24"
+                            height="24"
+                            alt="svg icon"
+                          />
+                        </div>
+                        <!-- BATHROOM DROPDOWN -->
+                        <div
+                          class="flex-1"
+                          x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['Duplex House', 'Duplex House 1', 'Duplex House 2'],
+                                selected: 1,
+                              }
+                              "
+                          @click.away="dropDownOpen = false"
+                        >
+                          <label
+                            for="property"
+                            class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            Bathrooms
+                          </label>
+                          <div class="relative">
+                            <div
+                              class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                              :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                              @click="dropDownOpen = !dropDownOpen"
+                            >
+                              <span
+                                x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                              ></span>
+                              <span>▾</span>
+                            </div>
+                            <div
+                              x-show="dropDownOpen"
+                              class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                            >
+                              <div class="h-full overflow-auto">
+                                <ul>
+                                  <li
+                                    class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[0]"
+                                    @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[1]"
+                                    @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[2]"
+                                    @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- GARAGE -->
+                      <div
+                        class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] pr-[20px] last:mr-0 last:border-r-0 mb-[45px]"
+                      >
+                        <!-- ICON -->
+                        <div class="mr-4 self-start shrink-0">
+                          <img
+                            src="images/dollar-circle.svg"
+                            width="24"
+                            height="24"
+                            alt="svg icon"
+                          />
+                        </div>
+                        <!-- GARAGE DROPDOWN -->
+                        <div
+                          class="flex-1"
+                          x-data="
+                              {
+                                dropDownOpen: false,
+                                items: ['2 Garage', '3 Garage', '4 Garage'],
+                                selected: 1,
+                              }
+                              "
+                          @click.away="dropDownOpen = false"
+                        >
+                          <label
+                            for="property"
+                            class="font-['Lora'] block capitalize text-[#0b2c3d] text-[17px] xl:text-[23px] leading-none mb-1"
+                            @click="dropDownOpen = !dropDownOpen"
+                          >
+                            Price Range
+                          </label>
+                          <div class="relative">
+                            <div
+                              class="font-light w-full leading-relaxed flex cursor-pointer text-[#494949]"
+                              :class="{
+                              '!border-[#b39359]' : dropDownOpen,
+                              '!border-opacity-60' : dropDownOpen,
+                              '!shadow-[0px_6px_15px_rgba(0,0,0,0.1)]': dropDownOpen
+                            }"
+                              @click="dropDownOpen = !dropDownOpen"
+                            >
+                              <span
+                                x-text="selected === 1 ? items[0] : selected === 2 ? items[1] : selected === 3 ? items[2] : ''"
+                              ></span>
+                              <span>▾</span>
+                            </div>
+                            <div
+                              x-show="dropDownOpen"
+                              class="absolute w-full block top-full left-0 bg-[#F8F8F8] border border-[#c4c4c4] shadow-sm z-40"
+                            >
+                              <div class="h-full overflow-auto">
+                                <ul>
+                                  <li
+                                    class="bg-[#01614e] text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[0]"
+                                    @click="
+                                    selected = 1;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[1]"
+                                    @click="
+                                    selected = 2;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                  <li
+                                    class="text-[#666] hover:bg-[#01614e] hover:text-white block p-2.5 cursor-pointer text-xs text-left"
+                                    x-text="items[2]"
+                                    @click="
+                                    selected = 3;
+                                    dropDownOpen = false;
+                                  "
+                                  ></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- SEARCH PROPERTIES SECONDARY BUTTON -->
+                      <div
+                        class="w-full md:w-1/2 lg:w-[21%] flex lg:border-r lg:border-[#0b2c3d] lg:mr-[40px] last:mr-0 last:border-r-0 mb-[45px] relative"
+                      >
+                        <button
+                          class="w-full p-[20px] text-[18px] md:text-[22px] bg-[#FFF6F0] text-[#B39359] rounded-lg transition-all hover:bg-[#0b2c3d] hover:text-white"
+                        >
+                          Search Properties
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </form>
@@ -1471,7 +3525,7 @@
                   </p>
                   <form class="relative w-full">
                     <input
-                      class="font-light text-white leading-[1.75] opacity-100 border border-[#b39359] w-full lg:w-[395px] xl:w-[495px] h-[60px] rounded-[10px] py-[15px] pl-[15px] pr-[15px] sm:pr-[135px] focus:border-white focus:outline-none border-opacity-60 placeholder:text-[#E2E2E2] bg-transparent"
+                      class="font-light text-white leading-[1.75] opacity-100 border border-[#b39359] w-full lg:w-[395px] xl:w-[495px] h-[60px] rounded-[10px] py-[15px] pl-[15px] pr-[20px] sm:pr-[135px] focus:border-white focus:outline-none border-opacity-60 placeholder:text-[#E2E2E2] bg-transparent"
                       type="text"
                       placeholder="Enter your email here..."
                     />
