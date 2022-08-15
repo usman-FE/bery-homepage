@@ -592,6 +592,10 @@ video {
   }
 }
 
+.pointer-events-none {
+  pointer-events: none;
+}
+
 .visible {
   visibility: visible;
 }
@@ -816,6 +820,22 @@ video {
   margin-left: 15px;
 }
 
+.mb-\[60px\] {
+  margin-bottom: 60px;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mr-\[30px\] {
+  margin-right: 30px;
+}
+
+.mb-\[120px\] {
+  margin-bottom: 120px;
+}
+
 .block {
   display: block;
 }
@@ -876,6 +896,10 @@ video {
   height: 22px;
 }
 
+.h-auto {
+  height: auto;
+}
+
 .max-h-0 {
   max-height: 0px;
 }
@@ -920,6 +944,14 @@ video {
   width: 3rem;
 }
 
+.w-auto {
+  width: auto;
+}
+
+.w-\[210px\] {
+  width: 210px;
+}
+
 .max-w-\[700px\] {
   max-width: 700px;
 }
@@ -930,6 +962,10 @@ video {
 
 .max-w-\[270px\] {
   max-width: 270px;
+}
+
+.max-w-\[1200px\] {
+  max-width: 1200px;
 }
 
 .flex-1 {
@@ -1423,12 +1459,20 @@ video {
   padding-top: 5rem;
 }
 
+.pt-\[80px\] {
+  padding-top: 80px;
+}
+
 .text-left {
   text-align: left;
 }
 
 .text-center {
   text-align: center;
+}
+
+.text-start {
+  text-align: start;
 }
 
 .font-\[\'Karla\'\] {
@@ -2294,6 +2338,11 @@ video {
 
   .xl\:text-\[36px\] {
     font-size: 36px;
+  }
+
+  .xl\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
 }
 
