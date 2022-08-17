@@ -2922,7 +2922,6 @@
                                this.width > 768 && this.width <= 1024 ? this.numberOfSlides = 2 :
                                this.numberOfSlides = 3;
                                this.numberOfBullets = Math.ceil(this.numberOfitems / this.numberOfSlides);
-                                console.log($refs.sliderContainer)
                                $nextTick(() => {
                                Array.from($refs.pagination.children)[1].classList.add('bg-[#b39359]');
                                Array.from($refs.pagination.children)[1].classList.add('border-transparent');
@@ -3917,6 +3916,106 @@
       </div>
     </section>
     <!-- POPULAR PROPERTIES SECTION END -->
+    <!-- VIDEO SECTION START -->
+    <section class="mt-12">
+      <div class="container mx-auto px-5 font-['Karla'] text-[#494949]">
+        <div class="relative flex items-center flex-col-reverse lg:flex-row justify-between max-w-[1200px] mx-auto"
+          x-data="{
+            isShowCaseOpen: false,
+            showBodyOverflow(){
+              document.querySelector('body').style.overflow = 'visible'
+            },
+            hideBodyOverflow(){
+              document.querySelector('body').style.overflow = 'hidden'
+            }
+          }">
+          <!-- VIDEO BOX -->
+          <div class="lg:max-w-[737px] max-w-full w-full">
+            <div class="rounded-[24px] z-[1] relative">
+              <!-- VIDEO THUMNAIL IMAGE -->
+              <div class="relative overflow-hidden">
+                <img data-depth="0.02" src="images/video-2.webp" class="rounded-[24px] w-full" loading="lazy"
+                  width="507" height="349" alt="video image">
+              </div>
+              <a @click.prevent="
+                isShowCaseOpen = true;
+                hideBodyOverflow();
+              " href="#" class=" bg-white text-white hover:text-[#0b2c3d] absolute left-0 right-0 mx-auto top-1/2 -translate-y-1/2 hover:scale-105 hover:bg-[#0b2c3d] w-[70px] h-[70px] md:w-[90px] md:h-[90px] flex 
+                              flex-wrap z-[5] items-center justify-center opacity-100 shadow-[0px 4px 4px rgba(0, 0, 0, 0.25)] transition-all rounded-full group
+                              before:block before:absolute  before:bg-white before:opacity-80 before:shadow-[0px 4px 4px rgba(0, 0, 0, 0.25)] hover:before:bg-[#0b2c3d] hover:before:opacity-80 md:before:w-[110px] md:before:h-[110px] before:w-[90px] before:h-[90px] before:rounded-full before:z-[-5]
+                              " aria-label="play button">
+                <svg width="31" height="32" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path class="stroke-[#0b2c3d] group-hover:stroke-white"
+                    d="M1.63861 10.764V6.70324C1.63861 1.66145 5.20893 -0.403178 9.57772 2.11772L13.1024 4.14812L16.6271 6.17853C20.9959 8.69942 20.9959 12.8287 16.6271 15.3496L13.1024 17.38L9.57772 19.4104C5.20893 21.9313 1.63861 19.8666 1.63861 14.8249V10.764Z"
+                    stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <!-- VIDEO TEXT BOX -->
+          <div
+            class="relative max-w-full lg:max-w-[510px] w-full ml-0 lg:-ml-[80px] bg-[#0b2c3d] py-10 lg:py-20 px-10 rounded-[20px] lg:mb-0 mb-8 z-10">
+            <!-- CAPTION -->
+            <span class="text-[#b39359] text-tiny inline-block mb-2">Take a video tour</span>
+            <!-- HEADING -->
+            <h2
+              class="font-['Lora'] text-white text-[24px] sm:text-[26px] leading-[1.277] xl:text-[34px] mb-[10px] font-medium">
+              Watch the video for taking your decision easily
+              <span class="text-[#b39359]">.</span>
+            </h2>
+            <!-- ANCHOR -->
+            <a href="#" class="flex flex-wrap items-center text-[#b39359] text-tiny mt-[20px]">View all
+              <svg class="ml-[10px]" width="26" height="11" viewBox="0 0 26 11" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M20.0877 0.69303L24.2075 5.00849H0V5.99151H24.2075L20.0877 10.307L20.7493 11L26 5.5L20.7493 0L20.0877 0.69303Z"
+                  fill="currentColor">
+                </path>
+              </svg>
+            </a>
+            <!-- DOTTED IMAGE -->
+            <div>
+              <img src="images/shape-4.webp" class="absolute bottom-[30px] right-[30px] z-[1]" alt="shape image">
+            </div>
+          </div>
+          <!-- SHOWCASE OVERLAY BOX -->
+          <div
+            class="fixed inset-0 bg-black/70 w-full h-full z-50 px-2 py-10 text-center flex items-center justify-center"
+            x-show="isShowCaseOpen" @keyup.escape.window="
+                isShowCaseOpen = false;
+                showBodyOverflow();
+              " @click.self="
+                isShowCaseOpen = false;
+                showBodyOverflow();
+          ">
+            <div class="container max-w-4xl mx-auto px-6 py-4">
+              <div class="text-white flex justify-end mb-6">
+                <svg @click="
+                    isShowCaseOpen = false;
+                    showBodyOverflow();
+                  " class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27.12 27.12">
+                  <title>Asset 9</title>
+                  <g id="Layer_2" data-name="Layer 2">
+                    <g id="Layer_1-2" data-name="Layer 1">
+                      <rect x="12.06" y="-4.12" width="3" height="35.36" transform="translate(-5.62 13.56) rotate(-45)">
+                      </rect>
+                      <rect x="-4.12" y="12.06" width="35.36" height="3" transform="translate(-5.62 13.56) rotate(-45)">
+                      </rect>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+              <div class="aspect-video">
+                <iframe id="youtube-player" class="w-full h-full border-0"
+                  src="//www.youtube.com/embed/mSC6GwizOag?autoplay=1" allowfullscreen="true"></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- VIDEO SECTION END -->
     <!-- NEWSLETTER SECTION START -->
     <section class="py-[80px] lg:p-[90px] bg-[#0b2c3d] relative font-['Karla']">
       <div class="container mx-auto px-4">
