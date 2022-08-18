@@ -6253,22 +6253,55 @@
           class="container mx-auto max-w-[1200px] px-5 font-['Karla'] text-[#494949]"
           x-data="{
             currentTab: 'buy',
-            allProperties: false,
+            allProperties: true,
             cardsData: [
               {
-                imageSrc: 'images/properties3.webp',
-                title: 'Orchid Casel de Paradise.',
+                imageSrc: 'images/properties4.webp',
+                title: 'Elite Garden Resedence.',
+                link: '#',
+                cam: 07,
+                vid: 08,
+                for: 'sale',
+                address: '253 Montril Street, South Town, Miami',
+                date: 'Added: 25 November, 2021',
+                area: '1230 Sq.fit',
+                bed: 5,
+                washroom: 3,
+                garage: 2,
+                price: '$255300',
+                id: 1
+              },
+              {
+                imageSrc: 'images/properties5.webp',
+                title: 'De Parasiya Appartment.',
                 link: '#',
                 cam: 07,
                 vid: 05,
-                for: 'sale',
+                for: 'co-living',
                 address: '18B Central Street, San Francisco',
                 date: 'Added: 25 November, 2021',
                 area: '1230 Sq.fit',
                 bed: 5,
                 washroom: 4,
                 garage: 2,
-                id: 1
+                price: '$255300',
+                id: 2
+              },
+              {
+                imageSrc: 'images/properties6.webp',
+                title: 'Duplex de Villa',
+                link: '#',
+                cam: 07,
+                vid: 05,
+                for: 'sale',
+                address: '194 Mercer Street, 627 Broadway, New York',
+                date: 'Added: 25 November, 2021',
+                area: '1230 Sq.fit',
+                bed: 5,
+                washroom: 4,
+                garage: 2,
+                price: '$255300',
+                id: 3
               },
               {
                 imageSrc: 'images/properties1.webp',
@@ -6277,13 +6310,46 @@
                 cam: 07,
                 vid: 05,
                 for: 'buy',
-                address: '18B Central Street, San Francisco',
+                address: '2846 West Side Avenue, New Jersey',
                 date: 'Added: 25 November, 2021',
                 area: '1230 Sq.fit',
                 bed: 5,
                 washroom: 4,
                 garage: 2,
-                id: 2
+                price: '$255300',
+                id: 4
+              },
+              {
+                imageSrc: 'images/properties5.webp',
+                title: 'Ruposibangla de parlosia.',
+                link: '#',
+                cam: 07,
+                vid: 05,
+                for: 'rent',
+                address: '2381 Richards Avenue, Stockton, California',
+                date: 'Added: 25 November, 2021',
+                area: '1230 Sq.fit',
+                bed: 5,
+                washroom: 4,
+                garage: 2,
+                price: '$255300',
+                id: 5
+              },
+              {
+                imageSrc: 'images/properties3.webp',
+                title: 'Sinomen Studio Palace.',
+                link: '#',
+                cam: 07,
+                vid: 05,
+                for: 'sale',
+                address: '4658 Oakwood Avenue, New York',
+                date: 'Added: 25 November, 2021',
+                area: '1230 Sq.fit',
+                bed: 5,
+                washroom: 4,
+                garage: 2,
+                price: '$255300',
+                id: 6
               }
             ]
           }"
@@ -6308,6 +6374,7 @@
                 class="mr-[30px] md:mr-[45px] mb-4 lg:mb-0 leading-none"
               >
                 <button
+                  @click="allProperties = true"
                   class="leading-none capitalize text-[#0b2c3d] hover:text-[#b39359] transition-all text-[16px] ease-out"
                 >
                   All Properties
@@ -6318,6 +6385,10 @@
                 class="mr-[30px] md:mr-[45px] mb-4 lg:mb-0 leading-none"
               >
                 <button
+                  @click="
+                    currentTab = 'buy'
+                    allProperties = false
+                  "
                   class="leading-none capitalize text-[#0b2c3d] hover:text-[#b39359] transition-all text-[16px] ease-out"
                 >
                   For Buy
@@ -6328,6 +6399,10 @@
                 class="mr-[30px] md:mr-[45px] mb-4 lg:mb-0 leading-none"
               >
                 <button
+                  @click="
+                  currentTab = 'sale'
+                  allProperties = false
+                  "
                   class="leading-none capitalize text-[#0b2c3d] hover:text-[#b39359] transition-all text-[16px] ease-out"
                 >
                   For Sale
@@ -6338,6 +6413,10 @@
                 class="mr-[30px] md:mr-[45px] mb-4 lg:mb-0 leading-none"
               >
                 <button
+                  @click="
+                  currentTab = 'rent'
+                  allProperties = false
+                  "
                   class="leading-none capitalize text-[#0b2c3d] hover:text-[#b39359] transition-all text-[16px] ease-out"
                 >
                   For Rent
@@ -6348,6 +6427,9 @@
                 class="md:mr-[0px] mb-4 lg:mb-0 leading-none"
               >
                 <button
+                  @click="
+                    currentTab = 'co-living'
+                    allProperties = false"
                   class="leading-none capitalize text-[#0b2c3d] hover:text-[#b39359] transition-all text-[16px] ease-out"
                 >
                   Co-living
@@ -6356,13 +6438,21 @@
             </ul>
           </div>
           <!-- FEATURED CARDS CONTAINER -->
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-[30px]">
+          <div
+            class="grid sm:grid-cols-2 lg:grid-cols-3 gap-[30px] transition-all"
+          >
             <!-- CARDS GENERATOR -->
             <template x-for="card in cardsData" :key="card.id">
               <!-- CARD -->
               <div
-                class="px-4 mb-8"
+                class="mb-8 transition-all"
                 x-show="card.for === currentTab || allProperties === true"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 scale-50"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-300"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-50"
               >
                 <article
                   class="overflow-hidden rounded-md drop-shadow-[0px_0px_5px_rgba(0,0,0,0.1)] bg-[#FFFDFC] text-center transition-all duration-300 hover:-translate-y-[10px]"
@@ -6375,7 +6465,7 @@
                         loading="lazy"
                         width="370"
                         height="266"
-                        alt="Orchid Casel de Paradise."
+                        :alt="card.title"
                       />
                     </a>
                     <div class="flex flex-wrap flex-col absolute top-5 right-5">
@@ -6389,7 +6479,8 @@
                           width="13"
                           height="10"
                           alt="camera icon"
-                        />07
+                        />
+                        <span x-text="card.cam"></span>
                       </button>
                       <button
                         class="flex flex-wrap items-center bg-[rgb(11,44,61,0.8)] p-[5px] rounded-[2px] text-white text-xs"
@@ -6401,33 +6492,32 @@
                           width="14"
                           height="10"
                           alt="video icon"
-                        />08
+                        />
+                        <span x-text="card.vid"></span>
                       </button>
                     </div>
                     <span
                       class="absolute bottom-5 left-5 bg-[#FFFDFC] p-[5px] rounded-[2px] text-[#0b2c3d] leading-none text-[14px] font-normal capitalize"
-                      >for Sale</span
-                    >
+                      >for <span x-text="card.for"></span
+                    ></span>
                   </div>
 
                   <div class="py-[20px] px-[20px] text-left">
                     <h3>
                       <a
                         href="#"
+                        x-text="card.title"
                         class="font-['Lora'] leading-tight text-[22px] xl:text-[26px] text-[#0b2c3d] hover:text-[#b39359] transition-all font-medium"
-                        >Orchid Casel de Paradise.</a
-                      >
+                      ></a>
                     </h3>
                     <h4>
                       <a
                         href="#"
+                        x-text="card.address"
                         class="font-light text-[14px] leading-[1.75] underline"
-                        >18B Central Street, San Francisco</a
-                      >
+                      ></a>
                     </h4>
-                    <span class="font-light text-sm"
-                      >Added: 25 November, 2021</span
-                    >
+                    <span class="font-light text-sm" x-text="card.date"></span>
                     <ul
                       class="flex flex-wrap items-center justify-between text-[12px] mt-[10px] mb-[15px] pb-[10px] border-b border-[#E0E0E0]"
                     >
@@ -6447,7 +6537,7 @@
                           ></path>
                         </svg>
 
-                        <span>1230 Sq.fit</span>
+                        <span x-text="card.area"></span>
                       </li>
                       <li
                         class="flex flex-wrap items-center pr-[25px] sm:pr-[5px] md:pr-[25px] border-r border-[#E0DEDE]"
@@ -6465,7 +6555,7 @@
                           ></path>
                         </svg>
 
-                        <span>5</span>
+                        <span x-text="card.bed"></span>
                       </li>
                       <li
                         class="flex flex-wrap items-center pr-[25px] sm:pr-[5px] md:pr-[25px] border-r border-[#E0DEDE]"
@@ -6483,7 +6573,7 @@
                           ></path>
                         </svg>
 
-                        <span>3</span>
+                        <span x-text="card.washroom"></span>
                       </li>
                       <li class="flex flex-wrap items-center">
                         <svg
@@ -6508,7 +6598,7 @@
                           ></path>
                         </svg>
 
-                        <span>2</span>
+                        <span x-text="card.garage"></span>
                       </li>
                     </ul>
 
@@ -6516,8 +6606,8 @@
                       <li class="flex flex-wrap items-center justify-between">
                         <span
                           class="font-['Lora'] text-base text-[#0b2c3d] leading-none font-medium"
-                          >Price: $255300</span
-                        >
+                          >Price: <span x-text="card.price"></span
+                        ></span>
 
                         <span class="flex flex-wrap items-center">
                           <button
