@@ -4023,7 +4023,7 @@
     <!-- FEATURED PROPERTIES SECTION START -->
     <section class="py-[80px] lg:py-[120px]">
       <div class="container mx-auto max-w-[1200px] px-5 font-['Karla'] text-[#494949]" x-data="{
-            currentTab: 'buy',
+            currentTab: '',
             allProperties: true,
             cardsData: [
               {
@@ -4133,43 +4133,46 @@
             </h2>
           </div>
           <ul class="flex flex-wrap lg:pt-[10px]">
-            <li data-tab="all-properties" class="mr-[30px] md:mr-[45px] mb-4 lg:mb-0 leading-none">
-              <button @click="allProperties = true"
+            <li class="mr-[30px] md:mr-[45px] mb-4 lg:mb-0 leading-none">
+              <button @click="
+                allProperties = true;
+                currentTab = '';
+              " :class="allProperties ? 'text-[#b39359]' : 'text-[#0b2c3d]'"
                 class="leading-none capitalize text-[#0b2c3d] hover:text-[#b39359] transition-all text-[16px] ease-out">
                 All Properties
               </button>
             </li>
-            <li data-tab="ForBuy" class="mr-[30px] md:mr-[45px] mb-4 lg:mb-0 leading-none">
+            <li class="mr-[30px] md:mr-[45px] mb-4 lg:mb-0 leading-none">
               <button @click="
                     currentTab = 'buy'
                     allProperties = false
-                  "
+                  " :class="currentTab === 'buy' ? 'text-[#b39359]' : 'text-[#0b2c3d]'"
                 class="leading-none capitalize text-[#0b2c3d] hover:text-[#b39359] transition-all text-[16px] ease-out">
                 For Buy
               </button>
             </li>
-            <li data-tab="ForSale" class="mr-[30px] md:mr-[45px] mb-4 lg:mb-0 leading-none">
+            <li class="mr-[30px] md:mr-[45px] mb-4 lg:mb-0 leading-none">
               <button @click="
                   currentTab = 'sale'
                   allProperties = false
-                  "
+                  " :class="currentTab === 'sale' ? 'text-[#b39359]' : 'text-[#0b2c3d]'"
                 class="leading-none capitalize text-[#0b2c3d] hover:text-[#b39359] transition-all text-[16px] ease-out">
                 For Sale
               </button>
             </li>
-            <li data-tab="ForRent" class="mr-[30px] md:mr-[45px] mb-4 lg:mb-0 leading-none">
+            <li class="mr-[30px] md:mr-[45px] mb-4 lg:mb-0 leading-none">
               <button @click="
                   currentTab = 'rent'
                   allProperties = false
-                  "
+                  " :class="currentTab === 'rent' ? 'text-[#b39359]' : 'text-[#0b2c3d]'"
                 class="leading-none capitalize text-[#0b2c3d] hover:text-[#b39359] transition-all text-[16px] ease-out">
                 For Rent
               </button>
             </li>
-            <li data-tab="co-living2" class="md:mr-[0px] mb-4 lg:mb-0 leading-none">
+            <li class="md:mr-[0px] mb-4 lg:mb-0 leading-none">
               <button @click="
                     currentTab = 'co-living'
-                    allProperties = false"
+                    allProperties = false" :class="currentTab === 'co-living' ? 'text-[#b39359]' : 'text-[#0b2c3d]'"
                 class="leading-none capitalize text-[#0b2c3d] hover:text-[#b39359] transition-all text-[16px] ease-out">
                 Co-living
               </button>
